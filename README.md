@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # CaVirtex
 
 TODO: Write a gem description
@@ -27,3 +28,7 @@ TODO: Write usage instructions here
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+=======
+ca_virtex
+=========
+>>>>>>> 8f467e9d60a489d6c22c2f6394532cf98528cb19
