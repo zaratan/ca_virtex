@@ -45,7 +45,10 @@ module CaVirtex
       end
 
       def parse_message(message)
-        OpenStruct.new(JSON.parse(message))
+        result = OpenStruct.new(JSON.parse(message))
+        if result.status != "ok"
+          throw Error.new("The call failed.")
+        end
       end
     end
   end
