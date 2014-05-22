@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = CaVirtex::VERSION
   spec.authors       = ["Zaratan"]
   spec.email         = ["denis.pasin@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
+  spec.summary       = %q{A gem to map CA Virtex API}
+  spec.description   = %q{A gem with a full mapping of CA Virtex API}
+  spec.homepage      = "https://github.com/Skizzk/ca_virtex"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
