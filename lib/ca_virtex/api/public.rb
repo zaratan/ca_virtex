@@ -13,7 +13,7 @@ module CaVirtex
       private
 
       def orderbook_call(order_currency: :BTC, payment_currency: :CAD, count: 10)
-        query = construct_currency_pair(order_currency, payment_currency)
+        query = {currencypair: construct_currency_pair(order_currency, payment_currency)}
         self.class.get("/orderbook.json", query: query)
       end
 
