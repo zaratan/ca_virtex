@@ -1,8 +1,10 @@
+#require 'hashlib'
+#require 'hmac'
 module CaVirtex
   module API
     class Base
       include HTTParty
-      base_uri "http://cavirtex.com/api2"
+      base_uri "https://cavirtex.com/api2"
 
       CURRENCIES_KEYS = [:BTCCAD,:LTCCAD,:BTCLTC]
 
@@ -13,12 +15,12 @@ module CaVirtex
 
       private
 
-      def headers(endpoint, params)
-        nonce = nonce
+      def headers(endpoint, params = {})
+        current_nonce = nonce
         {
           token: @api_key,
-          nonce: nonce,
-          signature: generate_api_sign(endpoint, nonce, params)
+          nonce: current_nonce,
+          signature: generate_api_sign(endpoint, current_nonce, params)
         }
       end
 
@@ -27,8 +29,9 @@ module CaVirtex
       end
 
       def generate_api_sign(endpoint, nonce, params)
-        data = params.to_alphabeticly_ordered
-        Base64.strict_encode64(OpenSSL::HMAC.hexdigest('sha256', @api_secret, nonce + @api_key + endpoint + data))
+        data = params.to_alphabeticly_ordered || ""
+        digest = OpenSSL::Digest.new('sha256')
+        OpenSSL::HMAC.hexdigest(digest, @api_secret, nonce + @api_key + '/api2' + endpoint + data)
       end
 
       def construct_currency_pair(currency_1, currency_2)
@@ -41,14 +44,13 @@ module CaVirtex
                    "BTCLTC"
                  end
                end
-        {currencypair: pair}
+        pair
       end
 
       def parse_message(message)
         result = OpenStruct.new(JSON.parse(message))
-        if result.status != "ok"
-          throw Error.new("The call failed.")
-        end
+        throw Error.new(result.message) if result.status != "ok"
+        result
       end
     end
   end
