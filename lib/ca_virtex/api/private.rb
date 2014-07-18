@@ -2,7 +2,7 @@ module CaVirtex
   module API
     class Private < Base
       def balance
-        parse_message(balance_call)
+        parse_balance(parse_message(balance_call))
       end
 
       def order(currency_from: :CAD, currency_to: :BTC, mode: "buy", amount: "0" ,price: "0")
@@ -17,6 +17,11 @@ module CaVirtex
       end
 
       private
+
+      def parse_balance(response)
+        response.balance = OpenStruct.new(response.balance)
+        response
+      end
 
       def balance_call
         endpoint = '/user/balance.json'
