@@ -21,7 +21,7 @@ module CaVirtex
         count ||= 1000
         orders.orderbook= OpenStruct.new(orders.orderbook)
         orders.orderbook.bids = parse_order(orders.orderbook.bids).first(count) 
-        orders.orderbook.asks = parse_order(orders.orderbook.asks).first(count) 
+        orders.orderbook.asks = parse_order(orders.orderbook.asks).sort_by{|e| e.price}.first(count) 
         orders
       end
 
